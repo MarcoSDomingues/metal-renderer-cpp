@@ -14,6 +14,7 @@
 		A97F5DDC2C332B0F00A6313F /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97F5DD72C33275000A6313F /* AppDelegate.cpp */; };
 		A97F5DDD2C332B1200A6313F /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97F5DD92C332A7000A6313F /* Renderer.cpp */; };
 		A97F5DDF2C332F4800A6313F /* ViewDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97F5DDE2C332F4800A6313F /* ViewDelegate.cpp */; };
+		A9E3111D2C33F5E0005C7746 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = A9E3111C2C33F5E0005C7746 /* Shaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,7 @@
 		A97F5DD92C332A7000A6313F /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		A97F5DDA2C332A7000A6313F /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
 		A97F5DDE2C332F4800A6313F /* ViewDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewDelegate.cpp; sourceTree = "<group>"; };
+		A9E3111C2C33F5E0005C7746 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		A97F5DC42C32B84600A6313F /* MetalEngine */ = {
 			isa = PBXGroup;
 			children = (
+				A9E3111B2C33F5B3005C7746 /* shaders */,
 				A97F5DC52C32B84600A6313F /* main.cpp */,
 				A97F5DCC2C32B94D00A6313F /* AppDelegate.hpp */,
 				A97F5DD72C33275000A6313F /* AppDelegate.cpp */,
@@ -97,6 +100,14 @@
 				A97F5DCE2C3310AB00A6313F /* Metal.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9E3111B2C33F5B3005C7746 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				A9E3111C2C33F5E0005C7746 /* Shaders.metal */,
+			);
+			path = shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,6 +171,7 @@
 				A97F5DDC2C332B0F00A6313F /* AppDelegate.cpp in Sources */,
 				A97F5DC62C32B84600A6313F /* main.cpp in Sources */,
 				A97F5DDF2C332F4800A6313F /* ViewDelegate.cpp in Sources */,
+				A9E3111D2C33F5E0005C7746 /* Shaders.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,7 +231,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.2.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -274,7 +286,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.2.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -291,6 +303,7 @@
 					"$(PROJECT_DIR)/metal-cpp",
 					"$(PROJECT_DIR)/metal-cpp-extensions",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.2.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -305,6 +318,7 @@
 					"$(PROJECT_DIR)/metal-cpp",
 					"$(PROJECT_DIR)/metal-cpp-extensions",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.2.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

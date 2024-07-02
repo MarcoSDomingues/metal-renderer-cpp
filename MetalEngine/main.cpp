@@ -17,8 +17,6 @@
 #include "AppDelegate.hpp"
 
 int main(int argc, const char * argv[]) {
-    std::cout << "Hello, World!\n";
-
     NS::AutoreleasePool* pAutoreleasePool = NS::AutoreleasePool::alloc()->init();
     
     AppDelegate appDelegate;

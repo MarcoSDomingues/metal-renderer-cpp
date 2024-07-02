@@ -21,4 +21,11 @@ public:
 private:
     MTL::Device* _pDevice;
     MTL::CommandQueue* _pCommandQueue;
+    MTL::Buffer* _pVertexPositionsBuffer;
+    MTL::Buffer* _pVertexColorsBuffer;
+    MTL::RenderPipelineState* _pRenderPipelineState;
+
+private:
+    void buildBuffers();
+    void buildShaders();
 };
