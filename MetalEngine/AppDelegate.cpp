@@ -62,7 +62,7 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification *pNotification)
     CGRect frame = (CGRect){ {100.0, 100.0}, {800, 600} };
 
     _pWindow = NS::Window::alloc()->init(frame,
-                                         NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled,
+                                         NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled|NS::WindowStyleMaskResizable,
                                          NS::BackingStoreBuffered,
                                          false);
 

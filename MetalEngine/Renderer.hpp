@@ -12,6 +12,11 @@
 #include <MetalKit/MetalKit.hpp>
 #include <simd/simd.h>
 
+struct MVertex {
+    simd::float4 position;
+    simd::float4 color;
+};
+
 class Renderer {
 public:
     Renderer(MTL::Device* pDevice);
@@ -23,6 +28,7 @@ private:
     MTL::CommandQueue* _pCommandQueue;
     MTL::Buffer* _pVertexPositionsBuffer;
     MTL::Buffer* _pVertexColorsBuffer;
+    MTL::Buffer* _pVertexIndexBuffer;
     MTL::RenderPipelineState* _pRenderPipelineState;
 
 private:
