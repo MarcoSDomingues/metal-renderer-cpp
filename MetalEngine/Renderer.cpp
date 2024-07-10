@@ -6,6 +6,7 @@
 //
 
 #include "Renderer.hpp"
+#include "Matrix.hpp"
 
 Renderer::Renderer(MTL::Device* pDevice)
     : _pDevice(pDevice->retain())
@@ -23,15 +24,15 @@ Renderer::~Renderer()
     _pVertexPositionsBuffer->release();
     _pRenderPipelineState->release();
     _pVertexColorsBuffer->release();
+    _pUniformsBuffer->release();
 }
 
 void Renderer::buildBuffers()
 {
     const float s = 0.5f;
     const size_t NumVertices = 8;
-    using namespace simd;
 
-    float4 positions[NumVertices] =
+    simd::float4 positions[NumVertices] =
     {
         { -s, -s, +s, 1.0f },
         { +s, -s, +s, 1.0f },
@@ -44,7 +45,7 @@ void Renderer::buildBuffers()
         { +s, -s, -s, 1.0f }
     };
 
-    float4 colors[NumVertices] =
+    simd::float4 colors[NumVertices] =
     {
         {  1.0f, 0.0f, 0.0f, 1.0f },
         {  1.0f, 0.0f, 0.0f, 1.0f },
@@ -76,8 +77,8 @@ void Renderer::buildBuffers()
         1, 0, 4
     };
 
-    const size_t positionsDataSize = NumVertices * sizeof(float4);
-    const size_t colorsDataSize = NumVertices * sizeof(float4);
+    const size_t positionsDataSize = NumVertices * sizeof(simd::float4);
+    const size_t colorsDataSize = NumVertices * sizeof(simd::float4);
     const size_t indexDataSize = sizeof(indices);
 
     _pVertexPositionsBuffer = _pDevice->newBuffer(positionsDataSize, MTL::ResourceStorageModeManaged);
@@ -127,9 +128,37 @@ void Renderer::buildShaders()
     pLibrary->release();
 }
 
+void Renderer::updateUniforms()
+{
+    // Identity matrix
+    simd::float4x4 modelMatrix = simd::float4x4(1.0);
+
+    simd::float3 eye = simd::make_float3(0.0, 2.0, 2.0);
+    simd::float3 center = simd::make_float3(0.0, 0.0, 0.0);
+    simd::float3 up = simd::make_float3(0.0, 1.0, 0.0);
+    simd::float4x4 viewMatrix = Matrix::createLookAt(eye, center, up);
+
+    float aspectRatio = 800.0 / 600.0;
+    float fov = 45.0 * (M_PI / 180.0);
+    float near = 0.1;
+    float far = 100.0;
+    simd::float4x4 perspectiveProjectionMatrix = Matrix::createPerspective(fov, aspectRatio, near, far);
+
+    simd::float4x4 mvpMatrix = perspectiveProjectionMatrix * viewMatrix * modelMatrix;
+
+    const size_t uniformsDataSize = sizeof(simd::float4x4);
+    _pUniformsBuffer = _pDevice->newBuffer(uniformsDataSize, MTL::ResourceStorageModeManaged);
+
+    memcpy(_pUniformsBuffer->contents(), &mvpMatrix, uniformsDataSize);
+
+    _pUniformsBuffer->didModifyRange(NS::Range::Make(0, _pUniformsBuffer->length()));
+}
+
 void Renderer::draw(MTK::View *pView)
 {
     NS::AutoreleasePool* pAutoreleasePool = NS::AutoreleasePool::alloc()->init();
+
+    updateUniforms();
 
     MTL::CommandBuffer* pCommandBuffer = _pCommandQueue->commandBuffer();
     MTL::RenderPassDescriptor* pPassDescriptor = pView->currentRenderPassDescriptor();
@@ -141,6 +170,7 @@ void Renderer::draw(MTK::View *pView)
     pEncoder->setRenderPipelineState(_pRenderPipelineState);
     pEncoder->setVertexBuffer(_pVertexPositionsBuffer, 0, 0);
     pEncoder->setVertexBuffer(_pVertexColorsBuffer, 0, 1);
+    pEncoder->setVertexBuffer(_pUniformsBuffer, 0, 2);
 
     pEncoder->setCullMode(MTL::CullModeBack);
     pEncoder->setFrontFacingWinding(MTL::Winding::WindingCounterClockwise);

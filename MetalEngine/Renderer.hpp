@@ -29,9 +29,11 @@ private:
     MTL::Buffer* _pVertexPositionsBuffer;
     MTL::Buffer* _pVertexColorsBuffer;
     MTL::Buffer* _pVertexIndexBuffer;
+    MTL::Buffer* _pUniformsBuffer;
     MTL::RenderPipelineState* _pRenderPipelineState;
 
 private:
     void buildBuffers();
     void buildShaders();
+    void updateUniforms();
 };

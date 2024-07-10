@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A902F7B22C3DEDAE0020C74E /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A902F7B02C3DEDAE0020C74E /* Matrix.cpp */; };
 		A97F5DC62C32B84600A6313F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97F5DC52C32B84600A6313F /* main.cpp */; };
 		A97F5DCF2C3310AB00A6313F /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97F5DCE2C3310AB00A6313F /* Metal.framework */; };
 		A97F5DD32C3310B800A6313F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97F5DD22C3310B800A6313F /* Foundation.framework */; };
@@ -30,6 +31,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A902F7B02C3DEDAE0020C74E /* Matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
+		A902F7B12C3DEDAE0020C74E /* Matrix.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
 		A97F5DC22C32B84600A6313F /* MetalEngine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MetalEngine; sourceTree = BUILT_PRODUCTS_DIR; };
 		A97F5DC52C32B84600A6313F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A97F5DCC2C32B94D00A6313F /* AppDelegate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AppDelegate.hpp; sourceTree = "<group>"; };
@@ -85,6 +88,8 @@
 				A97F5DD72C33275000A6313F /* AppDelegate.cpp */,
 				A97F5DD92C332A7000A6313F /* Renderer.cpp */,
 				A97F5DDA2C332A7000A6313F /* Renderer.hpp */,
+				A902F7B02C3DEDAE0020C74E /* Matrix.cpp */,
+				A902F7B12C3DEDAE0020C74E /* Matrix.hpp */,
 				A97F5DD62C3317ED00A6313F /* ViewDelegate.hpp */,
 				A97F5DDE2C332F4800A6313F /* ViewDelegate.cpp */,
 			);
@@ -167,6 +172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A902F7B22C3DEDAE0020C74E /* Matrix.cpp in Sources */,
 				A97F5DDD2C332B1200A6313F /* Renderer.cpp in Sources */,
 				A97F5DDC2C332B0F00A6313F /* AppDelegate.cpp in Sources */,
 				A97F5DC62C32B84600A6313F /* main.cpp in Sources */,
