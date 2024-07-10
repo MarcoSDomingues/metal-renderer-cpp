@@ -26,10 +26,13 @@ public:
 private:
     MTL::Device* _pDevice;
     MTL::CommandQueue* _pCommandQueue;
+    MTL::Library* _pShaderLibrary;
     MTL::Buffer* _pVertexPositionsBuffer;
     MTL::Buffer* _pVertexColorsBuffer;
     MTL::Buffer* _pVertexIndexBuffer;
     MTL::Buffer* _pUniformsBuffer;
+    MTL::Buffer* _pArgBuffer;
+    MTL::Function* _pVertexFunction;
     MTL::RenderPipelineState* _pRenderPipelineState;
 
 private:

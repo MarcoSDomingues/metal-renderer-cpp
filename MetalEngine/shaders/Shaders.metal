@@ -15,19 +15,24 @@ struct Vertex
     half4 color;
 };
 
+struct VertexData
+{
+    device float4* positions [[id(0)]];
+    device float4* colors [[id(1)]];
+};
+
 struct Uniforms
 {
     float4x4 modelViewProjectionMatrix;
 };
 
 Vertex vertex vertexMain(uint vertexId [[vertex_id]],
-                         device const float4* positions [[buffer(0)]],
-                         device const float4* colors [[buffer(1)]],
-                         constant Uniforms *uniforms [[buffer(2)]])
+                         device const VertexData* vertexData [[buffer(0)]],
+                         constant Uniforms *uniforms [[buffer(1)]])
 {
     Vertex vo;
-    vo.position = uniforms->modelViewProjectionMatrix * positions[vertexId];
-    vo.color = half4(colors[vertexId]);
+    vo.position = uniforms->modelViewProjectionMatrix * vertexData->positions[vertexId];
+    vo.color = half4(vertexData->colors[vertexId]);
     return vo;
 }
 

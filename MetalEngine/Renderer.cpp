@@ -25,6 +25,9 @@ Renderer::~Renderer()
     _pRenderPipelineState->release();
     _pVertexColorsBuffer->release();
     _pUniformsBuffer->release();
+    _pArgBuffer->release();
+    _pShaderLibrary->release();
+    _pVertexFunction->release();
 }
 
 void Renderer::buildBuffers()
@@ -92,24 +95,38 @@ void Renderer::buildBuffers()
     _pVertexPositionsBuffer->didModifyRange(NS::Range::Make(0, _pVertexPositionsBuffer->length()));
     _pVertexColorsBuffer->didModifyRange(NS::Range::Make(0, _pVertexColorsBuffer->length()));
     _pVertexIndexBuffer->didModifyRange(NS::Range::Make(0, _pVertexIndexBuffer->length()));
+
+    assert(_pShaderLibrary);
+    assert(_pVertexFunction);
+
+    MTL::ArgumentEncoder *pArgEncoder = _pVertexFunction->newArgumentEncoder(0);
+    _pArgBuffer = _pDevice->newBuffer(pArgEncoder->encodedLength(), MTL::ResourceStorageModeManaged);
+
+    pArgEncoder->setArgumentBuffer(_pArgBuffer, 0);
+    pArgEncoder->setBuffer(_pVertexPositionsBuffer, 0, 0);
+    pArgEncoder->setBuffer(_pVertexColorsBuffer, 0, 1);
+
+    _pArgBuffer->didModifyRange(NS::Range::Make(0, _pArgBuffer->length()));
+
+    pArgEncoder->release();
 }
 
 void Renderer::buildShaders()
 {
     using NS::StringEncoding::UTF8StringEncoding;
 
-    MTL::Library* pLibrary = _pDevice->newDefaultLibrary();
-    if ( !pLibrary )
+    _pShaderLibrary = _pDevice->newDefaultLibrary();
+    if (!_pShaderLibrary)
     {
         __builtin_printf("Error creating shader library.");
         assert( false );
     }
 
-    MTL::Function* pVertexFunc = pLibrary->newFunction(NS::String::string("vertexMain", UTF8StringEncoding));
-    MTL::Function* pFragmentFunc = pLibrary->newFunction(NS::String::string("fragmentMain", UTF8StringEncoding));
+    _pVertexFunction = _pShaderLibrary->newFunction(NS::String::string("vertexMain", UTF8StringEncoding));
+    MTL::Function* pFragmentFunc = _pShaderLibrary->newFunction(NS::String::string("fragmentMain", UTF8StringEncoding));
 
     MTL::RenderPipelineDescriptor *pPipelineDescriptor = MTL::RenderPipelineDescriptor::alloc()->init();
-    pPipelineDescriptor->setVertexFunction(pVertexFunc);
+    pPipelineDescriptor->setVertexFunction(_pVertexFunction);
     pPipelineDescriptor->setFragmentFunction(pFragmentFunc);
     pPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB);
 
@@ -122,10 +139,8 @@ void Renderer::buildShaders()
         assert(false);
     }
 
-    pVertexFunc->release();
     pFragmentFunc->release();
     pPipelineDescriptor->release();
-    pLibrary->release();
 }
 
 void Renderer::updateUniforms()
@@ -168,9 +183,10 @@ void Renderer::draw(MTK::View *pView)
     MTL::RenderCommandEncoder* pEncoder = pCommandBuffer->renderCommandEncoder(pPassDescriptor);
 
     pEncoder->setRenderPipelineState(_pRenderPipelineState);
-    pEncoder->setVertexBuffer(_pVertexPositionsBuffer, 0, 0);
-    pEncoder->setVertexBuffer(_pVertexColorsBuffer, 0, 1);
-    pEncoder->setVertexBuffer(_pUniformsBuffer, 0, 2);
+    pEncoder->setVertexBuffer(_pArgBuffer, 0, 0);
+    pEncoder->useResource(_pVertexPositionsBuffer, MTL::ResourceUsageRead);
+    pEncoder->useResource(_pVertexColorsBuffer, MTL::ResourceUsageRead);
+    pEncoder->setVertexBuffer(_pUniformsBuffer, 0, 1);
 
     pEncoder->setCullMode(MTL::CullModeBack);
     pEncoder->setFrontFacingWinding(MTL::Winding::WindingCounterClockwise);
