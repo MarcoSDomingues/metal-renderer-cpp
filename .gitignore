@@ -33,3 +33,5 @@
 
 # Xcode
 xcuserdata/
+
+/build
