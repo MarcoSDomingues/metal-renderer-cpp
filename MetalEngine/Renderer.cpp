@@ -115,11 +115,13 @@ void Renderer::buildShaders()
 {
     using NS::StringEncoding::UTF8StringEncoding;
 
-    _pShaderLibrary = _pDevice->newDefaultLibrary();
+    NS::Error* pError = nullptr;
+    NS::String* pLibraryPath = NS::String::string("default.metallib", UTF8StringEncoding);
+    _pShaderLibrary = _pDevice->newLibrary(pLibraryPath, &pError);
     if (!_pShaderLibrary)
     {
-        __builtin_printf("Error creating shader library.");
-        assert( false );
+        __builtin_printf("Error creating shader library: %s\n", pError->localizedDescription()->utf8String());
+        assert(false);
     }
 
     _pVertexFunction = _pShaderLibrary->newFunction(NS::String::string("vertexMain", UTF8StringEncoding));
@@ -130,12 +132,10 @@ void Renderer::buildShaders()
     pPipelineDescriptor->setFragmentFunction(pFragmentFunc);
     pPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB);
 
-    NS::Error* pError = nullptr;
-
     _pRenderPipelineState = _pDevice->newRenderPipelineState(pPipelineDescriptor, &pError);
     if (!_pRenderPipelineState)
     {
-        __builtin_printf("%s", pError->localizedDescription()->utf8String());
+        __builtin_printf("%s\n", pError->localizedDescription()->utf8String());
         assert(false);
     }
 
