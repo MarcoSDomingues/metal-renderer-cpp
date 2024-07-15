@@ -61,7 +61,7 @@ add_custom_command(
     OUTPUT ${BUILD_DIR}/default.metallib
     COMMAND xcrun metallib ${SHADER_AIRS} -o ${BUILD_DIR}/default.metallib
     DEPENDS ${SHADER_AIRS}
-    COMMENT "Creating Metal library default.metallib"
+    COMMENT "Creating Metal library: default.metallib"
 )
 
 add_custom_target(
