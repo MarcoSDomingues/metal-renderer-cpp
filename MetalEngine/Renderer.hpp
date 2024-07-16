@@ -23,7 +23,7 @@ public:
     ~Renderer();
     void draw();
 
-    inline MTK::View* getMetalView() const { return _pMetalView; }
+    inline MTK::View* metalView() const { return _pMetalView; }
 
 private:
     MTL::Device* _pDevice;

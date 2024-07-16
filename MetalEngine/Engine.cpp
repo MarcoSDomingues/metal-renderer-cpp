@@ -45,7 +45,7 @@ void Engine::initializeWindow()
     }
 
     metalWindow = reinterpret_cast<NS::Window*>(glfwGetCocoaWindow(glfwWindow));
-    metalWindow->setContentView(renderer->getMetalView());
+    metalWindow->setContentView(renderer->metalView());
 }
 
 void Engine::run()
