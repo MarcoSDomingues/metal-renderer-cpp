@@ -19,5 +19,5 @@ ViewDelegate::~ViewDelegate()
 
 void ViewDelegate::drawInMTKView(MTK::View *pView)
 {
-    _pRenderer->draw(pView);
+    _pRenderer->draw();
 }

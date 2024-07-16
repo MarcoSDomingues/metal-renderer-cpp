@@ -21,10 +21,13 @@ class Renderer {
 public:
     Renderer(MTL::Device* pDevice);
     ~Renderer();
-    void draw(MTK::View* pView);
+    void draw();
+
+    inline MTK::View* getMetalView() const { return _pMetalView; }
 
 private:
     MTL::Device* _pDevice;
+    MTK::View* _pMetalView;
     MTL::CommandQueue* _pCommandQueue;
     MTL::Library* _pShaderLibrary;
     MTL::Buffer* _pVertexPositionsBuffer;
@@ -36,6 +39,7 @@ private:
     MTL::RenderPipelineState* _pRenderPipelineState;
 
 private:
+    void makeMetalView();
     void buildBuffers();
     void buildShaders();
     void updateUniforms();

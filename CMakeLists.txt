@@ -13,26 +13,45 @@ file(GLOB SOURCES "MetalEngine/*.cpp")
 # Add the executable
 add_executable(MetalEngine ${SOURCES})
 
-# Include directories for Metal-related code
 target_include_directories(MetalEngine PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/metal-cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/metal-cpp-extensions"
+    "${CMAKE_CURRENT_SOURCE_DIR}/vendor/includes/osx/glfw"
+    "${CMAKE_CURRENT_SOURCE_DIR}/vendor/includes/osx/metal-cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/vendor/includes/osx/metal-cpp-extensions"
 )
 
 # Find the necessary frameworks
 find_library(METAL_FRAMEWORK Metal)
 find_library(FOUNDATION_FRAMEWORK Foundation)
 find_library(METALKIT_FRAMEWORK MetalKit)
+find_library(COREGRAPHICS_FRAMEWORK CoreGraphics)
+find_library(COCOA_FRAMEWORK Cocoa)
+find_library(QUARTZCORE_FRAMEWORK QuartzCore)
+find_library(IOKIT_FRAMEWORK IOKit)
 
-# Link frameworks to the executable
+# Link osx frameworks to the executable
 if(METAL_FRAMEWORK AND FOUNDATION_FRAMEWORK AND METALKIT_FRAMEWORK)
     target_link_libraries(MetalEngine PRIVATE
         ${METAL_FRAMEWORK}
         ${FOUNDATION_FRAMEWORK}
         ${METALKIT_FRAMEWORK}
+        ${COREGRAPHICS_FRAMEWORK}
+        ${COCOA_FRAMEWORK}
+        ${QUARTZCORE_FRAMEWORK}
+        ${IOKIT_FRAMEWORK}
     )
 else()
     message(FATAL_ERROR "One or more frameworks not found")
+endif()
+
+# Set the GLFW library path and link the library
+set(GLFW_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/libraries/osx")
+find_library(GLFW_LIBRARY NAMES glfw3 glfw PATHS ${GLFW_LIB_DIR} NO_DEFAULT_PATH)
+
+if(GLFW_LIBRARY)
+    message(STATUS "GLFW library found at ${GLFW_LIBRARY}")
+    target_link_libraries(MetalEngine PRIVATE ${GLFW_LIBRARY})
+else()
+    message(FATAL_ERROR "GLFW library not found")
 endif()
 
 # Specify the shaders directory

@@ -16,6 +16,9 @@
 		A97F5DDD2C332B1200A6313F /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97F5DD92C332A7000A6313F /* Renderer.cpp */; };
 		A97F5DDF2C332F4800A6313F /* ViewDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97F5DDE2C332F4800A6313F /* ViewDelegate.cpp */; };
 		A9E3111D2C33F5E0005C7746 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = A9E3111C2C33F5E0005C7746 /* Shaders.metal */; };
+		A9E691112C46CFF400744B5D /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9E6910F2C46CFF400744B5D /* Engine.cpp */; };
+		A9E6911C2C46F6A600744B5D /* libglfw.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E691122C46E95600744B5D /* libglfw.3.dylib */; };
+		A9E6911D2C46F6A600744B5D /* libglfw.3.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = A9E691122C46E95600744B5D /* libglfw.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +30,17 @@
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
+		};
+		A9E6911E2C46F6A600744B5D /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A9E6911D2C46F6A600744B5D /* libglfw.3.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -46,6 +60,10 @@
 		A97F5DDA2C332A7000A6313F /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
 		A97F5DDE2C332F4800A6313F /* ViewDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewDelegate.cpp; sourceTree = "<group>"; };
 		A9E3111C2C33F5E0005C7746 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		A9E6910F2C46CFF400744B5D /* Engine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Engine.cpp; sourceTree = "<group>"; };
+		A9E691102C46CFF400744B5D /* Engine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Engine.hpp; sourceTree = "<group>"; };
+		A9E691122C46E95600744B5D /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.dylib; path = vendor/libraries/osx/libglfw.3.dylib; sourceTree = "<group>"; };
+		A9E691132C46E95600744B5D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/libraries/osx/libglfw3.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A97F5DD52C33176E00A6313F /* MetalKit.framework in Frameworks */,
+				A9E6911C2C46F6A600744B5D /* libglfw.3.dylib in Frameworks */,
 				A97F5DCF2C3310AB00A6313F /* Metal.framework in Frameworks */,
 				A97F5DD32C3310B800A6313F /* Foundation.framework in Frameworks */,
 			);
@@ -92,6 +111,8 @@
 				A902F7B12C3DEDAE0020C74E /* Matrix.hpp */,
 				A97F5DD62C3317ED00A6313F /* ViewDelegate.hpp */,
 				A97F5DDE2C332F4800A6313F /* ViewDelegate.cpp */,
+				A9E6910F2C46CFF400744B5D /* Engine.cpp */,
+				A9E691102C46CFF400744B5D /* Engine.hpp */,
 			);
 			path = MetalEngine;
 			sourceTree = "<group>";
@@ -99,6 +120,8 @@
 		A97F5DCD2C3310AA00A6313F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9E691122C46E95600744B5D /* libglfw.3.dylib */,
+				A9E691132C46E95600744B5D /* libglfw3.a */,
 				A97F5DD42C33176E00A6313F /* MetalKit.framework */,
 				A97F5DD22C3310B800A6313F /* Foundation.framework */,
 				A97F5DD02C3310B000A6313F /* Quartz.framework */,
@@ -125,6 +148,7 @@
 				A97F5DBE2C32B84600A6313F /* Sources */,
 				A97F5DBF2C32B84600A6313F /* Frameworks */,
 				A97F5DC02C32B84600A6313F /* CopyFiles */,
+				A9E6911E2C46F6A600744B5D /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -176,6 +200,7 @@
 				A97F5DDD2C332B1200A6313F /* Renderer.cpp in Sources */,
 				A97F5DDC2C332B0F00A6313F /* AppDelegate.cpp in Sources */,
 				A97F5DC62C32B84600A6313F /* main.cpp in Sources */,
+				A9E691112C46CFF400744B5D /* Engine.cpp in Sources */,
 				A97F5DDF2C332F4800A6313F /* ViewDelegate.cpp in Sources */,
 				A9E3111D2C33F5E0005C7746 /* Shaders.metal in Sources */,
 			);
@@ -306,9 +331,11 @@
 				DEVELOPMENT_TEAM = B436WFHLSF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/metal-cpp",
-					"$(PROJECT_DIR)/metal-cpp-extensions",
+					"$(PROJECT_DIR)/vendor/includes/osx/metal-cpp",
+					"$(PROJECT_DIR)/vendor/includes/osx/metal-cpp-extensions",
+					"$(PROJECT_DIR)/vendor/includes/osx/glfw",
 				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/vendor/libraries/osx";
 				MACOSX_DEPLOYMENT_TARGET = 14.2.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -321,9 +348,11 @@
 				DEVELOPMENT_TEAM = B436WFHLSF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/metal-cpp",
-					"$(PROJECT_DIR)/metal-cpp-extensions",
+					"$(PROJECT_DIR)/vendor/includes/osx/metal-cpp",
+					"$(PROJECT_DIR)/vendor/includes/osx/metal-cpp-extensions",
+					"$(PROJECT_DIR)/vendor/includes/osx/glfw",
 				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/vendor/libraries/osx";
 				MACOSX_DEPLOYMENT_TARGET = 14.2.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

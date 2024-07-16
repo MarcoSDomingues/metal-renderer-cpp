@@ -13,18 +13,11 @@
 #include <AppKit/AppKit.hpp>
 #include <MetalKit/MetalKit.hpp>
 
-#include <iostream>
-#include "AppDelegate.hpp"
+#include "Engine.hpp"
 
 int main(int argc, const char * argv[]) {
-    NS::AutoreleasePool* pAutoreleasePool = NS::AutoreleasePool::alloc()->init();
-    
-    AppDelegate appDelegate;
-    NS::Application* pSharedApplication = NS::Application::sharedApplication();
-    pSharedApplication->setDelegate(&appDelegate);
-    pSharedApplication->run();
-
-    pAutoreleasePool->release();
+    std::unique_ptr<Engine> engine = std::make_unique<Engine>();
+    engine->run();
 
     return 0;
 }

@@ -12,6 +12,7 @@ Renderer::Renderer(MTL::Device* pDevice)
     : _pDevice(pDevice->retain())
 {
     _pCommandQueue = _pDevice->newCommandQueue();
+    makeMetalView();
     buildShaders();
     buildBuffers();
 }
@@ -28,6 +29,14 @@ Renderer::~Renderer()
     _pArgBuffer->release();
     _pShaderLibrary->release();
     _pVertexFunction->release();
+    _pMetalView->release();
+}
+
+void Renderer::makeMetalView()
+{
+    CGRect frame = (CGRect){{100.0, 100.0}, {800, 600}};
+    _pMetalView = MTK::View::alloc()->init(frame, _pDevice);
+    _pMetalView->setColorPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB);
 }
 
 void Renderer::buildBuffers()
@@ -169,15 +178,18 @@ void Renderer::updateUniforms()
     _pUniformsBuffer->didModifyRange(NS::Range::Make(0, _pUniformsBuffer->length()));
 }
 
-void Renderer::draw(MTK::View *pView)
+void Renderer::draw()
 {
     NS::AutoreleasePool* pAutoreleasePool = NS::AutoreleasePool::alloc()->init();
 
     updateUniforms();
 
+    CA::MetalDrawable* drawable = _pMetalView->currentDrawable()->layer()->nextDrawable();
     MTL::CommandBuffer* pCommandBuffer = _pCommandQueue->commandBuffer();
-    MTL::RenderPassDescriptor* pPassDescriptor = pView->currentRenderPassDescriptor();
+    MTL::RenderPassDescriptor* pPassDescriptor = MTL::RenderPassDescriptor::alloc()->init();
+    pPassDescriptor->colorAttachments()->object(0)->setTexture(drawable->texture());
     pPassDescriptor->colorAttachments()->object(0)->setClearColor(MTL::ClearColor::Make(0.8, 0.8, 0.8, 1.0));
+    pPassDescriptor->colorAttachments()->object(0)->setLoadAction(MTL::LoadAction::LoadActionClear);
     pPassDescriptor->colorAttachments()->object(0)->setStoreAction(MTL::StoreAction::StoreActionStore);
 
     MTL::RenderCommandEncoder* pEncoder = pCommandBuffer->renderCommandEncoder(pPassDescriptor);
@@ -197,8 +209,11 @@ void Renderer::draw(MTK::View *pView)
                                     _pVertexIndexBuffer,
                                     0);
     pEncoder->endEncoding();
-    pCommandBuffer->presentDrawable(pView->currentDrawable());
+
+
+    pCommandBuffer->presentDrawable(drawable);
     pCommandBuffer->commit();
 
+    pPassDescriptor->release();
     pAutoreleasePool->release();
 }
