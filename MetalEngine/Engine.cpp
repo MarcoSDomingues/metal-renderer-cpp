@@ -13,15 +13,13 @@
 
 Engine::Engine()
 {
-    device = MTL::CreateSystemDefaultDevice();
-    renderer = new Renderer(device);
+    renderer = new Renderer();
 
     initializeWindow();
 }
 
 Engine::~Engine()
 {
-    device->release();
     metalWindow->release();
     glfwTerminate();
     delete renderer;

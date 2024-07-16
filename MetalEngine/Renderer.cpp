@@ -8,8 +8,8 @@
 #include "Renderer.hpp"
 #include "Matrix.hpp"
 
-Renderer::Renderer(MTL::Device* pDevice)
-    : _pDevice(pDevice->retain())
+Renderer::Renderer()
+    : _pDevice(MTL::CreateSystemDefaultDevice())
 {
     _pCommandQueue = _pDevice->newCommandQueue();
     makeMetalView();

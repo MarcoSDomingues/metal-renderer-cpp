@@ -28,5 +28,4 @@ private:
     Renderer* renderer;
     GLFWwindow* glfwWindow;
     NS::Window* metalWindow;
-    MTL::Device* device;
 };

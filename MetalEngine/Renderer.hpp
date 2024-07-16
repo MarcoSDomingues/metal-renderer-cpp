@@ -19,7 +19,7 @@ struct MVertex {
 
 class Renderer {
 public:
-    Renderer(MTL::Device* pDevice);
+    Renderer();
     ~Renderer();
     void draw();
 
