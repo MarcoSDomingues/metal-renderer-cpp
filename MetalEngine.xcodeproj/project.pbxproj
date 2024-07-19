@@ -53,7 +53,6 @@
 		A97F5DD42C33176E00A6313F /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		A97F5DD92C332A7000A6313F /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		A97F5DDA2C332A7000A6313F /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
-		A985C74F2C4A7FDC00F07470 /* NSWindowExtensions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NSWindowExtensions.hpp; sourceTree = "<group>"; };
 		A9E3111C2C33F5E0005C7746 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		A9E6910F2C46CFF400744B5D /* Engine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Engine.cpp; sourceTree = "<group>"; };
 		A9E691102C46CFF400744B5D /* Engine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Engine.hpp; sourceTree = "<group>"; };
@@ -103,7 +102,6 @@
 				A902F7B02C3DEDAE0020C74E /* Matrix.cpp */,
 				A902F7B12C3DEDAE0020C74E /* Matrix.hpp */,
 				A9E6910F2C46CFF400744B5D /* Engine.cpp */,
-				A985C74F2C4A7FDC00F07470 /* NSWindowExtensions.hpp */,
 				A9E691102C46CFF400744B5D /* Engine.hpp */,
 			);
 			path = MetalEngine;
