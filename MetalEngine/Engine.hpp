@@ -23,6 +23,7 @@ public:
 
 private:
     void initializeWindow();
+    void processInput();
 
 private:
     Renderer* renderer;

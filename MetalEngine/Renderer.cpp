@@ -12,7 +12,7 @@ Renderer::Renderer()
     : _pDevice(MTL::CreateSystemDefaultDevice())
 {
     _pCommandQueue = _pDevice->newCommandQueue();
-    makeMetalView();
+    makeMetalLayer();
     buildShaders();
     buildBuffers();
 }
@@ -29,14 +29,14 @@ Renderer::~Renderer()
     _pArgBuffer->release();
     _pShaderLibrary->release();
     _pVertexFunction->release();
-    _pMetalView->release();
+    _pLayer->release();
 }
 
-void Renderer::makeMetalView()
+void Renderer::makeMetalLayer()
 {
-    CGRect frame = (CGRect){{100.0, 100.0}, {800, 600}};
-    _pMetalView = MTK::View::alloc()->init(frame, _pDevice);
-    _pMetalView->setColorPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB);
+    _pLayer = CA::MetalLayer::layer()->retain();
+    _pLayer->setDevice(_pDevice);
+    _pLayer->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB);
 }
 
 void Renderer::buildBuffers()
@@ -178,13 +178,21 @@ void Renderer::updateUniforms()
     _pUniformsBuffer->didModifyRange(NS::Range::Make(0, _pUniformsBuffer->length()));
 }
 
+void Renderer::setDrawableSize(int width, int height)
+{
+    CGSize size;
+    size.width = width;
+    size.height = height;
+    _pLayer->setDrawableSize(size);
+}
+
 void Renderer::draw()
 {
     NS::AutoreleasePool* pAutoreleasePool = NS::AutoreleasePool::alloc()->init();
 
     updateUniforms();
 
-    CA::MetalDrawable* drawable = _pMetalView->currentDrawable()->layer()->nextDrawable();
+    CA::MetalDrawable* drawable = _pLayer->nextDrawable();
     MTL::CommandBuffer* pCommandBuffer = _pCommandQueue->commandBuffer();
     MTL::RenderPassDescriptor* pPassDescriptor = MTL::RenderPassDescriptor::alloc()->init();
     pPassDescriptor->colorAttachments()->object(0)->setTexture(drawable->texture());

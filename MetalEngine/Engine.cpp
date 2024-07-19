@@ -10,6 +10,7 @@
 #include "Renderer.hpp"
 #include "glfw3.h"
 #include "glfw3native.h"
+#include <iostream>
 
 Engine::Engine()
 {
@@ -44,16 +45,33 @@ void Engine::initializeWindow()
         assert(false);
     }
 
+    int width, height;
+    glfwGetFramebufferSize(glfwWindow, &width, &height);
+    renderer->setDrawableSize(width, height);
+
     metalWindow = reinterpret_cast<NS::Window*>(glfwGetCocoaWindow(glfwWindow));
-    metalWindow->setContentView(renderer->metalView());
+
+    NS::View* nsView = metalWindow->getContentView();
+    nsView->setLayer(renderer->metalLayer());
+    nsView->setWantsLayer(true);
 }
 
 void Engine::run()
 {
     while (!glfwWindowShouldClose(glfwWindow))
     {
+        processInput();
+        
         renderer->draw();
 
         glfwPollEvents();
+    }
+}
+
+void Engine::processInput()
+{
+    if (glfwGetKey(glfwWindow, GLFW_KEY_W) == GLFW_PRESS)
+    {
+        std::cout << "Key W Pressed" << std::endl;
     }
 }

@@ -35,6 +35,8 @@ namespace NS
 	{
 		public:
 			View*		init( CGRect frame );
+        void            setLayer( const Object* pLayer );
+        void            setWantsLayer( bool wantsLayer );
 	};
 }
 
@@ -42,4 +44,14 @@ namespace NS
 _NS_INLINE NS::View* NS::View::init( CGRect frame )
 {
 	return Object::sendMessage< View* >( _APPKIT_PRIVATE_CLS( NSView ), _APPKIT_PRIVATE_SEL( initWithFrame_ ), frame );
+}
+
+_NS_INLINE void NS::View::setLayer( const NS::Object* pLayer )
+{
+    Object::sendMessage< void >( this, _APPKIT_PRIVATE_SEL( setLayer_ ), pLayer );
+}
+
+_NS_INLINE void NS::View::setWantsLayer( bool wantsLayer )
+{
+    Object::sendMessage< void >( this, _APPKIT_PRIVATE_SEL( setWantsLayer_ ), wantsLayer );
 }

@@ -23,11 +23,12 @@ public:
     ~Renderer();
     void draw();
 
-    inline MTK::View* metalView() const { return _pMetalView; }
+    void setDrawableSize(int width, int height);
+    inline CA::MetalLayer* metalLayer() const { return _pLayer; }
 
 private:
     MTL::Device* _pDevice;
-    MTK::View* _pMetalView;
+    CA::MetalLayer* _pLayer;
     MTL::CommandQueue* _pCommandQueue;
     MTL::Library* _pShaderLibrary;
     MTL::Buffer* _pVertexPositionsBuffer;
@@ -39,7 +40,7 @@ private:
     MTL::RenderPipelineState* _pRenderPipelineState;
 
 private:
-    void makeMetalView();
+    void makeMetalLayer();
     void buildBuffers();
     void buildShaders();
     void updateUniforms();
