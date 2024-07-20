@@ -7,6 +7,7 @@
 
 #include "Renderer.hpp"
 #include "Matrix.hpp"
+#include "glfw3.h"
 
 Renderer::Renderer()
     : _pDevice(MTL::CreateSystemDefaultDevice())
@@ -15,6 +16,10 @@ Renderer::Renderer()
     makeMetalLayer();
     buildShaders();
     buildBuffers();
+
+    cameraPosition = simd::make_float3(0.0, 0.0, 3.0);
+    cameraFront = simd::make_float3(0.0, 0.0, -1.0);
+    cameraUp = simd::make_float3(0.0, 1.0, 0.0);
 }
 
 Renderer::~Renderer()
@@ -156,11 +161,9 @@ void Renderer::updateUniforms()
 {
     // Identity matrix
     simd::float4x4 modelMatrix = simd::float4x4(1.0);
-
-    simd::float3 eye = simd::make_float3(0.0, 2.0, 2.0);
-    simd::float3 center = simd::make_float3(0.0, 0.0, 0.0);
-    simd::float3 up = simd::make_float3(0.0, 1.0, 0.0);
-    simd::float4x4 viewMatrix = Matrix::createLookAt(eye, center, up);
+    simd::float4x4 viewMatrix = Matrix::createLookAt(cameraPosition,
+                                                     cameraPosition + cameraFront,
+                                                     cameraUp);
 
     float aspectRatio = 800.0 / 600.0;
     float fov = 45.0 * (M_PI / 180.0);

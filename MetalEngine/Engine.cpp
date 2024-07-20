@@ -70,8 +70,24 @@ void Engine::run()
 
 void Engine::processInput()
 {
+    const float cameraSpeed = 0.05f;
+
     if (glfwGetKey(glfwWindow, GLFW_KEY_W) == GLFW_PRESS)
     {
-        std::cout << "Key W Pressed" << std::endl;
+        renderer->cameraPosition += cameraSpeed * renderer->cameraFront;
+    }
+    if (glfwGetKey(glfwWindow, GLFW_KEY_S) == GLFW_PRESS)
+    {
+        renderer->cameraPosition -= cameraSpeed * renderer->cameraFront;
+    }
+    if (glfwGetKey(glfwWindow, GLFW_KEY_A) == GLFW_PRESS)
+    {
+        simd::float3 cross = simd::cross(renderer->cameraFront, renderer->cameraUp);
+        renderer->cameraPosition -= simd::normalize(cross) * cameraSpeed;
+    }
+    if (glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS)
+    {
+        simd::float3 cross = simd::cross(renderer->cameraFront, renderer->cameraUp);
+        renderer->cameraPosition += simd::normalize(cross) * cameraSpeed;
     }
 }

@@ -44,4 +44,9 @@ private:
     void buildBuffers();
     void buildShaders();
     void updateUniforms();
+
+public:
+    simd::float3 cameraPosition;
+    simd::float3 cameraFront;
+    simd::float3 cameraUp;
 };
